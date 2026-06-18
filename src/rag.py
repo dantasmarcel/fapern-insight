@@ -9,6 +9,22 @@ def answer(question: str):
 
     docs = retriever.invoke(question)
 
+    print("\n========== DOCUMENTOS ==========")
+
+    for i, doc in enumerate(docs, 1):
+        print(f"\nDocumento {i}")
+        print(doc.metadata) 
+        print(doc.page_content[:800])
+
+    print("===============================\n")
+
+    for i, doc in enumerate(docs, 1):
+        print(f"\nDocumento {i}")
+        print(doc.metadata)
+        print(doc.page_content[:1000])
+
+    print("=" * 100)
+
     context = "\n\n".join(doc.page_content for doc in docs)
 
     prompt = build_prompt(question, context)
