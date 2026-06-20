@@ -5,22 +5,21 @@ from src.vectorstore import create_vectorstore
 
 def main():
     print("=" * 80)
+    print("🚀 FAPERN Insight - Indexação de Documentos")
+    print("=" * 80)
 
-    print("Carregando documentos...")
+    # Carrega os documentos
     documents = load_documents()
 
-    print(f"Páginas carregadas: {len(documents)}")
-
+    # Divide em chunks
     chunks = split_documents(documents)
 
-    print(f"Chunks criados: {len(chunks)}")
-
-    print("\nCriando banco vetorial...")
-
+    # Cria o banco vetorial
     create_vectorstore(chunks)
 
-    print("Banco vetorial criado com sucesso!")
-
+    print("\n✅ Banco vetorial criado com sucesso!")
+    print(f"📄 Total de páginas: {len(documents)}")
+    print(f"✂️ Total de chunks: {len(chunks)}")
     print("=" * 80)
 
 

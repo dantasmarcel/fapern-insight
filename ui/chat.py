@@ -1,5 +1,6 @@
 import streamlit as st
 
+from ui.metrics import render_metrics
 from src.rag import answer
 
 
@@ -8,21 +9,18 @@ def render_chat(config):
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Exibe o histórico
     for message in st.session_state.messages:
 
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-            # Mostra as fontes somente nas mensagens do assistente
-            if (
-                message["role"] == "assistant"
-                and "sources" in message
-                and message["sources"]
-            ):
+            if message.get("sources"):
+
                 with st.expander("📚 Fontes utilizadas"):
+
                     for source in message["sources"]:
-                        st.markdown(
+
+                        st.write(
                             f"**{source['source']}** — Página {source['page']}"
                         )
 
@@ -32,37 +30,20 @@ def render_chat(config):
 
     if question:
 
-        # Mostra a pergunta
         st.session_state.messages.append(
             {
                 "role": "user",
-                "content": question
+                "content": question,
             }
         )
 
         with st.chat_message("user"):
             st.markdown(question)
 
-        # Consulta o RAG
-        with st.chat_message("assistant"):
+        with st.spinner("Consultando documentos..."):
 
-            with st.spinner("Consultando os documentos..."):
+            response, sources = answer(question)
 
-                response, sources = answer(question)
-
-            st.markdown(response)
-
-            if sources:
-
-                with st.expander("📚 Fontes utilizadas"):
-
-                    for source in sources:
-
-                        st.markdown(
-                            f"**{source['source']}** — Página {source['page']}"
-                        )
-
-        # Salva no histórico
         st.session_state.messages.append(
             {
                 "role": "assistant",
@@ -70,3 +51,17 @@ def render_chat(config):
                 "sources": sources,
             }
         )
+
+        with st.chat_message("assistant"):
+
+            st.markdown(response)
+
+            render_metrics(sources)
+
+            with st.expander("📚 Fontes utilizadas", expanded=False):
+
+                for source in sources:
+
+                    st.write(
+                        f"**{source['source']}** — Página {source['page']}"
+                    )

@@ -1,9 +1,7 @@
 from langchain_chroma import Chroma
 
+from src.config import DB_DIR
 from src.embeddings import get_embeddings
-
-
-DB_DIRECTORY = "db"
 
 
 def create_vectorstore(chunks):
@@ -16,7 +14,7 @@ def create_vectorstore(chunks):
     vectorstore = Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
-        persist_directory=DB_DIRECTORY
+        persist_directory=str(DB_DIR),
     )
 
     return vectorstore
@@ -24,12 +22,12 @@ def create_vectorstore(chunks):
 
 def load_vectorstore():
     """
-    Carrega uma base vetorial já existente.
+    Carrega uma base vetorial existente.
     """
 
     embeddings = get_embeddings()
 
     return Chroma(
-        persist_directory=DB_DIRECTORY,
-        embedding_function=embeddings
+        persist_directory=str(DB_DIR),
+        embedding_function=embeddings,
     )

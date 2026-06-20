@@ -1,15 +1,18 @@
 from openai import OpenAI
 
-from src.config import OPENAI_API_KEY
+from src.config import LLM_MODEL, OPENAI_API_KEY
 
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
-def generate_answer(prompt: str):
+def generate_answer(prompt: str) -> str:
+    """
+    Envia o prompt para a OpenAI.
+    """
 
     response = client.responses.create(
-        model="gpt-5-mini",
+        model=LLM_MODEL,
         input=prompt,
     )
 

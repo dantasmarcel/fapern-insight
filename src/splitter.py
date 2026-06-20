@@ -1,15 +1,27 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+from src.config import CHUNK_SIZE, CHUNK_OVERLAP
+
 
 def split_documents(documents):
     """
-    Divide os documentos em chunks para o pipeline RAG.
+    Divide os documentos em chunks para indexação vetorial.
     """
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=600,
-        chunk_overlap=100,
-        separators=["\n\n", "\n", ".", " ", ""]
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separators=[
+            "\n\n",
+            "\n",
+            ".",
+            " ",
+            ""
+        ],
     )
 
-    return text_splitter.split_documents(documents)
+    chunks = text_splitter.split_documents(documents)
+
+    print(f"✂️ Chunks criados: {len(chunks)}")
+
+    return chunks

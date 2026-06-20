@@ -1,39 +1,46 @@
 import streamlit as st
 
+from src.config import (
+    LLM_MODEL,
+    TOP_K,
+)
+
 
 def render_sidebar():
 
-    with st.sidebar:
+    st.sidebar.title("⚙️ Configurações")
 
-        st.header("⚙️ Configurações")
+    st.sidebar.markdown("---")
 
-        model = st.selectbox(
-            "Modelo",
-            (
-                "Mistral",
-                "Gemma",
-                "Llama"
-            )
-        )
+    st.sidebar.markdown("### Modelo")
 
-        top_k = st.slider(
-            "Quantidade de documentos recuperados",
-            min_value=1,
-            max_value=10,
-            value=4
-        )
+    model = st.sidebar.text_input(
+        "LLM",
+        value=LLM_MODEL,
+        disabled=True,
+    )
 
-        st.divider()
+    top_k = st.sidebar.slider(
+        "Top K",
+        min_value=1,
+        max_value=15,
+        value=TOP_K,
+        disabled=True,  # Por enquanto apenas informativo
+    )
 
-        st.subheader("📄 Base documental")
+    st.sidebar.markdown("---")
 
-        st.success("Estatuto da FAPERN")
+    st.sidebar.success("✅ Base vetorial carregada")
 
-        st.success("Lei Complementar 257/2003")
+    st.sidebar.info(
+        """
+Projeto desenvolvido para a disciplina de IA Generativa.
 
-        st.success("Decreto 17.456/2004")
+**FAPERN Insight**
+"""
+    )
 
-        return {
-            "model": model,
-            "top_k": top_k
-        }
+    return {
+        "model": model,
+        "top_k": top_k,
+    }

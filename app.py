@@ -8,7 +8,6 @@ st.set_page_config(
     page_title="FAPERN Insight",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
 )
 
 render_header()
