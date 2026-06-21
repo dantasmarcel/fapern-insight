@@ -36,11 +36,11 @@ EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 # Splitter
 # ======================================
 
-CHUNK_SIZE = 800
-CHUNK_OVERLAP = 150
+CHUNK_SIZE = 1200
+CHUNK_OVERLAP = 250
 
 # ======================================
 # Retrieval
 # ======================================
 
-TOP_K = 23
+TOP_K = 8

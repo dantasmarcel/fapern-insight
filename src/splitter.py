@@ -12,9 +12,14 @@ def split_documents(documents):
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
         separators=[
+            "\nCAPÍTULO",
+            "\nCapítulo",
+            "\nSEÇÃO",
+            "\nSeção",
+            "\nArt.",
             "\n\n",
             "\n",
-            ".",
+            ". ",
             " ",
             ""
         ],
