@@ -1,10 +1,11 @@
 from pathlib import Path
+
 from src.llm import generate_answer
 from src.prompts import build_prompt
 from src.retriever import get_retriever
 
 
-def answer(question: str):
+def answer(question: str, model_name: str):
     """
     Pipeline principal do RAG.
     """
@@ -22,7 +23,10 @@ def answer(question: str):
         context=context,
     )
 
-    response = generate_answer(prompt)
+    response = generate_answer(
+        prompt,
+        model_name,
+    )
 
     sources = []
 
@@ -36,6 +40,7 @@ def answer(question: str):
                 "Desconhecido"
             )
         ).stem.replace("_", " ").title()
+
         page = doc.metadata.get("page", 0) + 1
 
         key = (source, page)

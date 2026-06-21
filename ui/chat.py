@@ -42,7 +42,10 @@ def render_chat(config):
 
         with st.spinner("Consultando documentos..."):
 
-            response, sources = answer(question)
+            response, sources = answer(
+                question=question,
+                model_name=config["model"],
+            )
 
         st.session_state.messages.append(
             {
