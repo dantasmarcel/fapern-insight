@@ -2,7 +2,7 @@ from src.config import TOP_K
 from src.vectorstore import load_vectorstore
 
 
-def get_retriever():
+def get_retriever(top_k: int = TOP_K):
     """
     Retorna o retriever responsável pela busca semântica.
     """
@@ -11,6 +11,6 @@ def get_retriever():
 
     return vectorstore.as_retriever(
         search_kwargs={
-            "k": TOP_K
+            "k": top_k
         }
     )

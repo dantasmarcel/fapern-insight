@@ -16,6 +16,8 @@ def render_chat(config):
 
             if message.get("sources"):
 
+                render_metrics(message["sources"])
+
                 with st.expander("📚 Fontes utilizadas"):
 
                     for source in message["sources"]:
@@ -45,6 +47,7 @@ def render_chat(config):
             response, sources = answer(
                 question=question,
                 model_name=config["model"],
+                top_k=config["top_k"],
             )
 
         st.session_state.messages.append(

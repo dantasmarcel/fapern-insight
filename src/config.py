@@ -19,14 +19,20 @@ DATA_DIR = BASE_DIR / "data"
 DB_DIR = BASE_DIR / "db"
 
 # ======================================
-# OpenAI
+# APIs
 # ======================================
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+# ======================================
+# Modelos
+# ======================================
 
 OPENAI_MODEL = "gpt-5-mini"
 GEMINI_MODEL = "gemini-2.5-flash"
+DEEPSEEK_MODEL = "deepseek-chat"
 
 # ======================================
 # Embeddings

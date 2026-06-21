@@ -5,12 +5,12 @@ from src.prompts import build_prompt
 from src.retriever import get_retriever
 
 
-def answer(question: str, model_name: str):
+def answer(question: str, model_name: str, top_k: int):
     """
     Pipeline principal do RAG.
     """
 
-    retriever = get_retriever()
+    retriever = get_retriever(top_k)
 
     docs = retriever.invoke(question)
 
