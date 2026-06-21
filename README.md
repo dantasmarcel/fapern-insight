@@ -1,6 +1,8 @@
 # 🤖 FAPERN Insight
 
-Assistente Inteligente para Consulta de Documentos Institucionais da FAPERN utilizando **Retrieval-Augmented Generation (RAG)**.
+Assistente Inteligente para Consulta de Documentos Institucionais da FAPERN utilizando Retrieval-Augmented Generation (RAG) e suporte a múltiplos Modelos de Linguagem (LLMs).
+
+O sistema permite alternar dinamicamente entre diferentes provedores de IA, mantendo a mesma base documental e o mesmo mecanismo de recuperação semântica.
 
 O projeto foi desenvolvido como atividade da disciplina de **Inteligência Artificial Generativa** do **Instituto Metrópole Digital (IMD/UFRN)**.
 
@@ -37,8 +39,8 @@ A base utilizada é composta por documentos oficiais da FAPERN, incluindo:
 ### Base atual
 
 - 📄 **23 documentos PDF**
-- 📚 **236 páginas**
-- ✂️ **1259 chunks indexados**
+- 📚 **233 páginas**
+- ✂️ **1009 chunks indexados**
 
 ---
 
@@ -48,28 +50,33 @@ A base utilizada é composta por documentos oficiais da FAPERN, incluindo:
 PDFs
     │
     ▼
-Loader (PyPDFLoader)
+PyPDFLoader
     │
     ▼
-Splitter
-(RecursiveCharacterTextSplitter)
+RecursiveCharacterTextSplitter
     │
     ▼
-Embeddings
-(sentence-transformers/all-MiniLM-L6-v2)
+Sentence Transformers
+(all-MiniLM-L6-v2)
     │
     ▼
 ChromaDB
-(Vector Store)
     │
     ▼
 Retriever
     │
     ▼
-OpenAI GPT-5 mini
+Prompt RAG
     │
     ▼
-Resposta
+───────────────────────────────
+│ GPT-5 Mini (OpenAI)         │
+│ Gemini 2.5 Flash            │
+│ DeepSeek Chat               │
+───────────────────────────────
+    │
+    ▼
+Resposta + Fontes
 ```
 
 ---
@@ -99,6 +106,10 @@ Resposta
 ## Modelo de Linguagem
 
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--5--mini-black)
+
+![Google](https://img.shields.io/badge/Google-Gemini%202.5%20Flash-blue)
+
+![DeepSeek](https://img.shields.io/badge/DeepSeek-Chat-orange)
 
 ## Leitura de documentos
 
@@ -185,7 +196,9 @@ pip install -r requirements.txt
 Crie um arquivo `.env` na raiz do projeto contendo:
 
 ```env
-OPENAI_API_KEY=sua_chave_da_openai
+OPENAI_API_KEY=sua_chave_openai
+GEMINI_API_KEY=sua_chave_gemini
+DEEPSEEK_API_KEY=sua_chave_deepseek
 ```
 
 ---
@@ -231,18 +244,20 @@ streamlit run app.py
 O sistema é capaz de:
 
 - Responder perguntas em linguagem natural;
-- Recuperar documentos relevantes utilizando busca vetorial;
-- Apresentar as fontes utilizadas em cada resposta;
-- Reduzir respostas sem fundamentação utilizando a técnica RAG.
+- Utilizar recuperação semântica baseada em embeddings;
+- Mostrar as fontes utilizadas;
+- Permitir alternância entre múltiplas LLMs;
+- Reduzir alucinações utilizando RAG.
 
 ---
 
 # 🚀 Trabalhos futuros
 
-- Busca híbrida (vetorial + palavras-chave);
+- Avaliação automática da qualidade das respostas;
+- Suporte a novos provedores de IA;
+- Busca híbrida (vetorial + BM25);
 - Reranking dos documentos recuperados;
-- Upload de novos documentos pela interface;
-- Filtros por tipo de documento;
+- Upload de documentos pela interface;
 - Histórico persistente de conversas;
 - Dashboard administrativo.
 
