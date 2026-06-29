@@ -1,8 +1,8 @@
-from src.config import TOP_K
+from src.config import RETRIEVER_TOP_K
 from src.vectorstore import load_vectorstore
 
 
-def get_retriever(top_k: int = TOP_K):
+def get_retriever(top_k: int = RETRIEVER_TOP_K):
     """
     Retorna o retriever responsável pela busca semântica.
     """

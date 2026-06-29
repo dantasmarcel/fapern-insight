@@ -51,4 +51,14 @@ CHUNK_OVERLAP = 250
 # Retrieval
 # ======================================
 
-TOP_K = 8
+RETRIEVER_TOP_K = 8
+
+# ======================================
+# Neural Reranker
+# ======================================
+
+ENABLE_RERANKING = True
+
+RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
+
+RERANK_TOP_N = 4

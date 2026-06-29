@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.config import TOP_K
+from src.config import RETRIEVER_TOP_K
 
 
 MODELS = {
@@ -31,7 +31,7 @@ def render_sidebar():
         "Quantidade de trechos recuperados",
         min_value=1,
         max_value=20,
-        value=TOP_K,
+        value=RETRIEVER_TOP_K,
         help="Número de trechos recuperados antes da geração da resposta.",
     )
 

@@ -12,11 +12,30 @@ def render_chat(config):
     for message in st.session_state.messages:
 
         with st.chat_message(message["role"]):
+
             st.markdown(message["content"])
 
             if message.get("sources"):
 
                 render_metrics(message["sources"])
+
+                metrics = message["metrics"]
+
+                st.caption(
+                    f"""
+📄 Recuperados: {metrics['retrieved_docs']} |
+🧠 Após reranking: {metrics['reranked_docs']}
+"""
+                )
+
+                st.caption(
+                    f"""
+⏱ Retrieval: {metrics['timings']['retrieval']:.2f}s |
+🧠 Reranker: {metrics['timings']['reranker']:.2f}s |
+🤖 LLM: {metrics['timings']['llm']:.2f}s |
+🚀 Total: {metrics['timings']['total']:.2f}s
+"""
+                )
 
                 with st.expander("📚 Fontes utilizadas"):
 
@@ -40,11 +59,12 @@ def render_chat(config):
         )
 
         with st.chat_message("user"):
+
             st.markdown(question)
 
         with st.spinner("Consultando documentos..."):
 
-            response, sources = answer(
+            response, sources, metrics = answer(
                 question=question,
                 model_name=config["model"],
                 top_k=config["top_k"],
@@ -55,6 +75,7 @@ def render_chat(config):
                 "role": "assistant",
                 "content": response,
                 "sources": sources,
+                "metrics": metrics,
             }
         )
 
@@ -64,7 +85,26 @@ def render_chat(config):
 
             render_metrics(sources)
 
-            with st.expander("📚 Fontes utilizadas", expanded=False):
+            st.caption(
+                f"""
+📄 Recuperados: {metrics['retrieved_docs']} |
+🧠 Enviados à LLM: 4 {metrics['reranked_docs']}
+"""
+            )
+
+            st.caption(
+                f"""
+⏱ Retrieval: {metrics['timings']['retrieval']:.2f}s |
+🧠 Reranker: {metrics['timings']['reranker']:.2f}s |
+🤖 LLM: {metrics['timings']['llm']:.2f}s |
+🚀 Total: {metrics['timings']['total']:.2f}s
+"""
+            )
+
+            with st.expander(
+                "📚 Fontes utilizadas",
+                expanded=False,
+            ):
 
                 for source in sources:
 

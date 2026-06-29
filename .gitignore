@@ -1,16 +1,31 @@
-.env# Ambiente virtual
+# ==========================
+# Ambiente Virtual
+# ==========================
 .venv/
 
-# Variáveis de ambiente
+# ==========================
+# Variáveis de Ambiente
+# ==========================
 .env
 
+# ==========================
 # Cache Python
+# ==========================
 __pycache__/
-*.pyc
+*.py[cod]
 
+# ==========================
+# Pytest
+# ==========================
+.pytest_cache/
+
+# ==========================
 # VS Code
+# ==========================
 .vscode/
 
-# Sistema
+# ==========================
+# Sistema Operacional
+# ==========================
 .DS_Store
 Thumbs.db
